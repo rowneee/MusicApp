@@ -16,6 +16,7 @@ class AllSongs extends React.Component {
           <div className="row card-row">
           {this.props.cards.map(card => {
             return <SongCard
+              playlists={this.props.playlists}
               card={card}
               key={card.id}
               id={card.id}

@@ -29,17 +29,6 @@ class MusicPage extends React.Component {
       const updatedCards = cards.map(card => ({...card, playlist: false}))
       this.setState({cards: updatedCards, playlists})
     })
-    // fetch('http://localhost:3000/api/songs')
-    // .then(r => r.json())
-    // .then(cards => {
-    //   const updatedCards = cards.map(card => ({...card, playlist: false}))
-    //   this.setState({cards: updatedCards})
-    // })
-    // fetch('http://localhost:3000/api/playlists')
-    // .then(r => r.json())
-    // .then(playlists => {
-    //   this.setState({playlists})
-    // })
   }
 
   handleChosenCard = (songId, playlistId) => {
@@ -70,9 +59,11 @@ class MusicPage extends React.Component {
     })
   }
 
+
   render() {
     console.log("Music Page", this.state);
     const inPlaylist = this.state.cards.filter(card => card.playlist)
+    console.log("hi", inPlaylist);
     const filtered = this.state.cards.filter(card => {
       return card.name.toLowerCase().includes(this.state.search.toLowerCase())
     })

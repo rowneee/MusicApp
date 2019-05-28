@@ -1,16 +1,35 @@
 import React from 'react';
-import { Button, Card, Image, Dropdown } from 'semantic-ui-react'
+import AddToPlaylist from "../components/AddToPlaylist"
+import { Button, Card, Image } from 'semantic-ui-react'
 
 class SongCard extends React.Component{
 
   state = {
-    details: false
+    details: false,
+    activePlaylist: ''
+  }
+
+  setPlaylist = (playlistId) => {
+    const API = 'http://localhost:3000/api/song_playlists'
+    console.log(playlistId);
+    this.setState({activePlaylist: playlistId})
+    //add song to playlist backend
+    fetch(API , {
+      method: 'POST',
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        song_id: this.props.card.id,
+        playlist_id: playlistId
+      })
+    })
   }
 
   toggleDetails = () => {
     this.setState({details: !this.state.details})
   }
-
 
   render() {
     console.log('rendering', this.props);
@@ -40,15 +59,15 @@ class SongCard extends React.Component{
            </Card.Description>
          </Card.Content>
          <Card.Content extra>
-            <Button color="red" onClick={() =>this.props.handleClick(this.props.card.id)} >
+            <Button color="red" >
                Add To Playlist
             </Button>
-            <Dropdown text='Add to Playlist'>
-              <Dropdown.Menu>
-
-                <Dropdown.Item text='hi' />
-              </Dropdown.Menu>
-            </Dropdown>
+            <AddToPlaylist
+              activePlaylist={this.state.activePlaylist}
+              setPlaylist={this.setPlaylist}
+              playlists={this.props.playlists}
+              handleClick={this.props.handleClick}
+              />
          </Card.Content>
        </Card>
       )

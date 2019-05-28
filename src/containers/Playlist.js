@@ -13,8 +13,10 @@ class Playlist extends React.Component {
       <div className="ui segment blue">
         <div className="ui five column grid">
           <div className="row card-row">
-          {this.props.inPlaylist.map(card => {
-            return <SongCard id={card.id}
+          {this.props.playlist.songs.map(card => {
+            return <SongCard
+            playlistid={this.props.playlist.id}
+            id={card.id}
             card={card}
             key={card.id}
             handleClick={this.props.handleClick}/>
