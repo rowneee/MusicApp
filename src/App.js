@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import NavBar from './containers/NavBar'
 import MusicPage from './containers/MusicPage'
+import { Switch, Route } from 'react-router-dom'
 
 function App() {
   return (

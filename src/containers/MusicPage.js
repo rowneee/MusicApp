@@ -39,9 +39,17 @@ class MusicPage extends React.Component {
   }
 
   handleRemove = (id) => {
-    const chosenCards = this.state.cards.filter(card => card.id !== id)
-    console.log(chosenCards);
-        this.setState({cards: chosenCards})
+    this.setState(prevState => {
+      return {
+        cards: prevState.cards.map(card => {
+          if (card.id === id) {
+            return {...card, favorites: false}
+          } else {
+            return card
+          }
+        })
+      }
+    })
   }
 
   render() {
