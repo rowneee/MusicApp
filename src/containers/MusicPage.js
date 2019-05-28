@@ -1,13 +1,14 @@
 import React from 'react'
 import SearchBar from './SearchBar'
-import Favorites from './Favorites'
+import Playlists from './Playlists'
 import AllSongs from './AllSongs'
 import { Search } from 'semantic-ui-react'
+import { Route, withRouter } from 'react-router-dom'
 
 class MusicPage extends React.Component {
   state = {
     cards: [],
-    myFavs: [],
+    playlists: [],
     search: ''
   }
 
@@ -16,20 +17,37 @@ class MusicPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3000/api/songs')
-    .then(r => r.json())
-    .then(cards => {
-      const updatedCards = cards.map(card => ({...card, favorites: false}))
-      this.setState({cards: updatedCards})
+    const cardPromise = fetch('http://localhost:3000/api/songs').then(r => r.json())
+    const playlistPromise = fetch('http://localhost:3000/api/playlists').then(r => r.json())
+
+    Promise.all([
+      cardPromise,
+      playlistPromise
+    ]).then(([cards, playlists]) => {
+      console.log('cards', cards);
+      console.log('playlists', playlists);
+      const updatedCards = cards.map(card => ({...card, playlist: false}))
+      this.setState({cards: updatedCards, playlists})
     })
+    // fetch('http://localhost:3000/api/songs')
+    // .then(r => r.json())
+    // .then(cards => {
+    //   const updatedCards = cards.map(card => ({...card, playlist: false}))
+    //   this.setState({cards: updatedCards})
+    // })
+    // fetch('http://localhost:3000/api/playlists')
+    // .then(r => r.json())
+    // .then(playlists => {
+    //   this.setState({playlists})
+    // })
   }
 
-  handleChosenCard = (id) => {
+  handleChosenCard = (songId, playlistId) => {
     this.setState(prevState => {
       return {
         cards: prevState.cards.map(card => {
-          if (card.id === id) {
-            return {...card, favorites: true}
+          if (card.id === songId) {
+            return {...card, playlist: true}
           } else {
             return card
           }
@@ -38,12 +56,12 @@ class MusicPage extends React.Component {
     })
   }
 
-  handleRemove = (id) => {
+  handleRemove = (songId, playlistId) => {
     this.setState(prevState => {
       return {
         cards: prevState.cards.map(card => {
-          if (card.id === id) {
-            return {...card, favorites: false}
+          if (card.id === songId) {
+            return {...card, playlist: false}
           } else {
             return card
           }
@@ -54,7 +72,7 @@ class MusicPage extends React.Component {
 
   render() {
     console.log("Music Page", this.state);
-    const inFavorites = this.state.cards.filter(card => card.favorites)
+    const inPlaylist = this.state.cards.filter(card => card.playlist)
     const filtered = this.state.cards.filter(card => {
       return card.name.toLowerCase().includes(this.state.search.toLowerCase())
     })
@@ -63,14 +81,18 @@ class MusicPage extends React.Component {
         <Search onSearchChange={this.handleSearch}
         showNoResults={false}
         />
-      <Favorites
+      <Route path="/playlists" render={(props)=> <Playlists {...props}
           cards={this.state.cards}
-          inFavorites={inFavorites}
+          inPlaylist={inPlaylist}
           handleRemove={this.handleRemove}
+          playlists={this.state.playlists}
+          />}
         />
-        <AllSongs
+      <Route path="/about" render={(props)=>  <AllSongs {...props}
           cards={filtered}
           onChosenCard={this.handleChosenCard}
+          playlists={this.state.playlists}
+        />}
         />
       </div>
     )

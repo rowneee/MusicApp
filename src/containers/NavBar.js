@@ -26,8 +26,8 @@ class Navbar extends React.Component {
           </Link>
         </div>
         <div className="item">
-          <Link to="/favorites">
-            Favorites
+          <Link to="/playlists">
+            Playlists
           </Link>
         </div>
       </div>

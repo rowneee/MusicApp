@@ -4,8 +4,8 @@ import { Container } from 'semantic-ui-react'
 
 class AllSongs extends React.Component {
 
-  handleClick = id => {
-    this.props.onChosenCard(id)
+  handleClick = songId => {
+    this.props.onChosenCard(songId)
   }
 
   render() {
