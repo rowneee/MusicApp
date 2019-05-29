@@ -1,12 +1,13 @@
 import React from 'react'
 import Playlists from './Playlists'
 import AllSongs from './AllSongs'
-import { Search } from 'semantic-ui-react'
-import { Route, withRouter } from 'react-router-dom'
+import { Container, Search } from 'semantic-ui-react'
+import { Switch, Route, withRouter } from 'react-router-dom'
 
 class MusicPage extends React.Component {
 
   state = {
+    timesClicked: 0,
     cards: [],
     playlists: [],
     search: ''
@@ -15,6 +16,27 @@ class MusicPage extends React.Component {
   handleSearch = (e, {value}) => {
     this.setState({search: value})
   }
+
+  handleSubmit = e => {
+    e.preventDefault()
+    fetch('http://localhost:3000/api/playlists', {
+      method: "POST",
+      headers:{
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user_id: 1,
+        name: e.target.name.value
+      })
+    })
+    .then(r => r.json())
+    .then(playlist => {
+      console.log("playlist post", playlist);
+      this.setState({playlists: [...this.state.playlists, playlist]})
+    })
+  }
+
 
   componentDidMount() {
     const cardPromise = fetch('http://localhost:3000/api/songs').then(r => r.json())
@@ -69,24 +91,32 @@ class MusicPage extends React.Component {
       return card.name.toLowerCase().includes(this.state.search.toLowerCase())
     })
     return(
-      <div>
-        <Search onSearchChange={this.handleSearch}
-        showNoResults={false}
-        placeholder="Search By Song"
-        />
+      <div className="MusicPage">
+      <Switch>
       <Route path="/playlists" render={(props)=> <Playlists {...props}
           cards={this.state.cards}
           inPlaylist={inPlaylist}
           handleRemove={this.handleRemove}
           playlists={this.state.playlists}
+          handleSubmit={this.handleSubmit}
           />}
         />
+      <Container>
+      <Route path="/" render={(props)=> <Search
+          onSearchChange={this.handleSearch}
+          showNoResults={false}
+          placeholder="Search By Song"
+          className="searchbar"
+          />}
+      />
       <Route path="/" render={(props)=>  <AllSongs {...props}
           cards={filtered}
           onChosenCard={this.handleChosenCard}
           playlists={this.state.playlists}
         />}
         />
+    </Container>
+    </Switch>
       </div>
     )
   }

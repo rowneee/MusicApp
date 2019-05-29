@@ -8,6 +8,20 @@ class Playlist extends React.Component {
     this.props.handleRemove(songId)
   }
 
+  createCards = () => {
+    if (this.props.playlist.songs.length > 0) {
+      return this.props.playlist.songs.map(card => {
+        return <SongCard
+        playlistid={this.props.playlist.id}
+        inPlaylist={this.props.inPlaylist}
+        id={card.id}
+        card={card}
+        key={card.id}
+        handleClick={this.props.handleClick}/>
+      })
+    }
+  }
+
   render() {
     console.log("All Songs Props", this.props)
     return (
@@ -18,15 +32,7 @@ class Playlist extends React.Component {
           </Header>
           <div className="ui five column grid">
             <div className="row card-row">
-            {this.props.playlist.songs.map(card => {
-              return <SongCard
-              playlistid={this.props.playlist.id}
-              inPlaylist={this.props.inPlaylist}
-              id={card.id}
-              card={card}
-              key={card.id}
-              handleClick={this.props.handleClick}/>
-            })}
+            {this.createCards()}
             </div>
           </div>
         </div>

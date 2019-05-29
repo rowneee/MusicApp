@@ -1,7 +1,7 @@
 import React from 'react'
 import SongCard from '../components/SongCard'
 import Playlist from './Playlist'
-import { Header } from 'semantic-ui-react'
+import { Form, Header } from 'semantic-ui-react'
 
 class Playlists extends React.Component {
 
@@ -19,11 +19,19 @@ class Playlists extends React.Component {
 
   render() {
     return (
-        <div className="ui segment blue">
-          <Header as='h1' color='blue'>
+        <div className="ui segment black music-page">
+          <Header as='h1' color='blue' className="music-page">
             My Playlists
           </Header>
-          <div className="ui five column grid">
+          <div style={{display: 'flex', justifyContent: 'center'}} className="form">
+            <Form onSubmit={this.props.handleSubmit}>
+              <Form.Group>
+                <Form.Input placeholder='New Playlist' name='name'/>
+                <Form.Button content='Add ' />
+              </Form.Group>
+            </Form>
+          </div>
+          <div className="ui five column grid music-page">
             <div className="row card-row">
               {this.props.playlists.map(playlist=>{
                 return <Playlist

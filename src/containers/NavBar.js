@@ -8,7 +8,7 @@ class Navbar extends React.Component {
   //   console.log('state is', this.state, this);
     // const { title, color, icon } = this.props
     return (
-      <div className={`ui inverted menu blue`}>
+      <div className={`ui inverted menu grey`}>
         <Link
           className='item'
           to="/"
@@ -20,11 +20,6 @@ class Navbar extends React.Component {
             </div>
           </h2>
         </Link>
-        <div className="item">
-          <Link to="/login">
-            Login
-          </Link>
-        </div>
         <div className="item">
           <Link to="/playlists">
             Playlists

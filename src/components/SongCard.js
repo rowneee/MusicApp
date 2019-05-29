@@ -35,7 +35,7 @@ class SongCard extends React.Component{
     console.log(this.props);
     if (this.state.details === false) {
       return (
-    <div className="ui column" >
+    <div className="ui column song-card" >
       <Card onClick={this.toggleDetails}>
         <Image src={this.props.card.img_url} wrapped ui={false} />
         <Card.Content>
@@ -49,7 +49,7 @@ class SongCard extends React.Component{
   )}
   else if (this.state.details === true) {
     return (
-      <Card>
+      <Card onClick={this.toggleDetails}>
         <Card.Content className="cardBack">
           <Image floated='right' size='mini' src={this.props.card.img_url} />
           <Card.Header>{this.props.card.name}</Card.Header>

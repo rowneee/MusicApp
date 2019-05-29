@@ -1,4 +1,5 @@
 body {
+  background-color: black;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -10,4 +11,21 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* .music-page {
+  background-color: black;
+} */
+
+.song-card {
+  padding-top: 5%;
+  padding-bottom: 2%;
+}
+
+.searchbar {
+  padding-top: 1.5%;
+}
+
+.form {
+  padding-bottom: 1%;
 }
