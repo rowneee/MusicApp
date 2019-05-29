@@ -1,11 +1,11 @@
 import React from 'react'
-import SearchBar from './SearchBar'
 import Playlists from './Playlists'
 import AllSongs from './AllSongs'
 import { Search } from 'semantic-ui-react'
 import { Route, withRouter } from 'react-router-dom'
 
 class MusicPage extends React.Component {
+
   state = {
     cards: [],
     playlists: [],
@@ -24,10 +24,12 @@ class MusicPage extends React.Component {
       cardPromise,
       playlistPromise
     ]).then(([cards, playlists]) => {
-      console.log('cards', cards);
-      console.log('playlists', playlists);
-      const updatedCards = cards.map(card => ({...card, playlist: false}))
-      this.setState({cards: updatedCards, playlists})
+      // console.log('here', playlists);
+      // const updatedCards = cards.map(card => ({...card, playlist: false}))
+      // console.log('and here', updatedCards);
+      this.setState({cards: cards, playlists: playlists}, () => {
+        console.log(this.state);
+      })
     })
   }
 
@@ -63,7 +65,6 @@ class MusicPage extends React.Component {
   render() {
     console.log("Music Page", this.state);
     const inPlaylist = this.state.cards.filter(card => card.playlist)
-    console.log("hi", inPlaylist);
     const filtered = this.state.cards.filter(card => {
       return card.name.toLowerCase().includes(this.state.search.toLowerCase())
     })
@@ -71,6 +72,7 @@ class MusicPage extends React.Component {
       <div>
         <Search onSearchChange={this.handleSearch}
         showNoResults={false}
+        placeholder="Search By Song"
         />
       <Route path="/playlists" render={(props)=> <Playlists {...props}
           cards={this.state.cards}
@@ -79,7 +81,7 @@ class MusicPage extends React.Component {
           playlists={this.state.playlists}
           />}
         />
-      <Route path="/about" render={(props)=>  <AllSongs {...props}
+      <Route path="/" render={(props)=>  <AllSongs {...props}
           cards={filtered}
           onChosenCard={this.handleChosenCard}
           playlists={this.state.playlists}

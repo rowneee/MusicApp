@@ -1,6 +1,7 @@
 import React from 'react'
 import SongCard from '../components/SongCard'
 import Playlist from './Playlist'
+import { Header } from 'semantic-ui-react'
 
 class Playlists extends React.Component {
 
@@ -17,21 +18,24 @@ class Playlists extends React.Component {
   // }
 
   render() {
-    console.log("All Songs Props", this.props)
     return (
-      <div className="ui segment blue">
-        <div className="ui five column grid">
-          <div className="row card-row">
+        <div className="ui segment blue">
+          <Header as='h1' color='blue'>
             My Playlists
-            {this.props.playlists.map(playlist=>{
-              return <Playlist playlist={playlist} id={playlist.id}
-              key={playlist.id}
-              inPlaylist={this.props.inPlaylist}
+          </Header>
+          <div className="ui five column grid">
+            <div className="row card-row">
+              {this.props.playlists.map(playlist=>{
+                return <Playlist
+                  playlist={playlist}
+                  id={playlist.id}
+                  key={playlist.id}
+                  inPlaylist={this.props.inPlaylist}
                 />
-            })}
+              })}
+            </div>
           </div>
         </div>
-      </div>
     )
   }
 }

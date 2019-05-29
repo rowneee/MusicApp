@@ -14,20 +14,22 @@ class AllSongs extends React.Component {
       <div className="ui container">
         <div className="ui five column grid">
           <div className="row card-row">
-          {this.props.cards.map(card => {
-            return <SongCard
-              playlists={this.props.playlists}
-              card={card}
-              key={card.id}
-              id={card.id}
-              handleClick={this.handleClick}
-              />
-          })}
+            {this.props.cards.map(card => {
+              return <SongCard
+                playlist={this.props.playlists}
+                card={card}
+                key={card.id}
+                id={card.id}
+                handleClick={this.handleClick}
+                />
+            })}
           </div>
         </div>
       </div>
     )
   }
 }
+
+
 
 export default AllSongs

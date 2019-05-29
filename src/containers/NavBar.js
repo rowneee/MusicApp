@@ -8,10 +8,10 @@ class Navbar extends React.Component {
   //   console.log('state is', this.state, this);
     // const { title, color, icon } = this.props
     return (
-      <div className={`ui inverted menu green`}>
+      <div className={`ui inverted menu blue`}>
         <Link
           className='item'
-          to="/about"
+          to="/"
         >
           <h2 className="ui header">
             <i className={`sound icon`}></i>

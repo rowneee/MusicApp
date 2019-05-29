@@ -6,13 +6,13 @@ class SongCard extends React.Component{
 
   state = {
     details: false,
-    activePlaylist: ''
+    // activePlaylist: ''
   }
 
   setPlaylist = (playlistId) => {
     const API = 'http://localhost:3000/api/song_playlists'
     console.log(playlistId);
-    this.setState({activePlaylist: playlistId})
+    // this.setState({activePlaylist: playlistId})
     //add song to playlist backend
     fetch(API , {
       method: 'POST',
@@ -32,7 +32,7 @@ class SongCard extends React.Component{
   }
 
   render() {
-    console.log('rendering', this.props);
+    console.log(this.props);
     if (this.state.details === false) {
       return (
     <div className="ui column" >
@@ -50,25 +50,23 @@ class SongCard extends React.Component{
   else if (this.state.details === true) {
     return (
       <Card>
-         <Card.Content className="cardBack">
-           <Image floated='right' size='mini' src={this.props.card.img_url} />
-           <Card.Header>{this.props.card.name}</Card.Header>
-           <Card.Meta>{this.props.card.artist}</Card.Meta>
-           <Card.Description>
-             {this.props.card.album}
-           </Card.Description>
-         </Card.Content>
-         <Card.Content extra>
-            <Button color="red" >
-               Add To Playlist
-            </Button>
-            <AddToPlaylist
-              activePlaylist={this.state.activePlaylist}
-              setPlaylist={this.setPlaylist}
-              playlists={this.props.playlists}
-              handleClick={this.props.handleClick}
-              />
-         </Card.Content>
+        <Card.Content className="cardBack">
+          <Image floated='right' size='mini' src={this.props.card.img_url} />
+          <Card.Header>{this.props.card.name}</Card.Header>
+          <Card.Meta>{this.props.card.artist}</Card.Meta>
+          <Card.Description>
+            {this.props.card.album}
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+           <AddToPlaylist
+             card={this.props.card}
+             inPlaylist={this.props.inPlaylist}
+             setPlaylist={this.setPlaylist}
+             playlists={this.props.playlist}
+             handleClick={this.props.handleClick}
+             />
+        </Card.Content>
        </Card>
       )
     }
